@@ -22,6 +22,7 @@ const ArtistItem = ({id, artistMap, setArtistMap}) => {
             </td>
             <td>{artistMap.get(id).name}</td>
             <td>{artistMap.get(id).following ? "Following" : "Not Following"}</td>
+            <td><a href={artistMap.get(id).uri}>Link</a></td>
         </tr>
     )
 };

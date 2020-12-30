@@ -22,15 +22,16 @@ const ArtistContainer = ({artistMap, setArtistMap}) => {
             <table className="table">
                 <thead>
                     <tr>
-                    <th scope="col">
-                        <input 
-                            type="checkbox"
-                            className="checkbox-all-artist" 
-                            onChange={selectAll}
-                        ></input>
-                    </th>
-                    <th scope="col">Artist</th>
-                    <th scope="col">Following</th>
+                        <th scope="col">
+                            <input 
+                                type="checkbox"
+                                className="checkbox-all-artist" 
+                                onChange={selectAll}
+                            ></input>
+                        </th>
+                        <th scope="col">Artist</th>
+                        <th scope="col">Following</th>
+                        <th scope="col">Link</th>
                     </tr>
                 </thead>
                 <tbody>
