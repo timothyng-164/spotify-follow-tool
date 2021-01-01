@@ -1,0 +1,15 @@
+.menu-container {
+  background-color: var(--color-grey);
+}
+
+h1, p, label {
+  color: white;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+p, label {
+  font-weight: 600;
+}

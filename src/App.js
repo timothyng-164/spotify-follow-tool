@@ -1,23 +1,38 @@
-import React, {useState}  from "react";
-import logo from './logo.svg';
+import React, {useState, useEffect}  from "react";
+import MainPage from './components/mainPage'
 import './App.css';
-
-import LoginButton from './components/loginButton'
-import ArtistContainer from './components/artistContainer'
-import MenuContainer from './components/menuContainer'
+import { TOKEN_KEY } from './api/apiUtils/authUtils'
+import { BrowserRouter, Route } from "react-router-dom";
+import CallbackRedirect from './components/callbackRedirect'
 
 
 const App = () => {
   const [artistMap, setArtistMap] = useState(new Map())
+  const [authenticated, setAuthenticated] = useState(localStorage.getItem(TOKEN_KEY) != null)
+
+  useEffect(() => {
+    setAuthenticated(localStorage.getItem(TOKEN_KEY) != null)
+  })
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <MenuContainer artistMap={artistMap} setArtistMap={setArtistMap}></MenuContainer>
-        <LoginButton artistMap={artistMap}></LoginButton>
-        <ArtistContainer artistMap={artistMap} setArtistMap={setArtistMap}></ArtistContainer>
-      </header>
+      <MainPage 
+        artistMap={artistMap}
+        setArtistMap={setArtistMap}
+        authenticated={authenticated}
+        setAuthenticated={setAuthenticated}
+      ></MainPage>
+      <BrowserRouter>
+        <Route path='/callback'>
+          <CallbackRedirect setAuthenticated={setAuthenticated}></CallbackRedirect>
+        </Route>
+      </BrowserRouter> 
+      {/* todo: put footer at bottom */}
+      <footer className='m-4'>
+        <a href="https://github.com/timothyng-164/spotify-follow-tool" >
+          <img src='/images/GitHub-Mark-Light-64px.png' length='30' width='30'></img>
+        </a>
+      </footer>
     </div>
     
   );

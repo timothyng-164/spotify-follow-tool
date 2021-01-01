@@ -3,9 +3,9 @@ import ArtistItem from './artistItem'
 import { setAllArtistChecked } from './util/setAllArtistChecked'
 import '../styles/artistContainer.css'
 
-const ArtistContainer = ({artistMap, setArtistMap}) => {
-    let artistItems = Array.from(artistMap.values()).map((artist) => 
-        <ArtistItem 
+const ArtistContainer = ({ artistMap, setArtistMap }) => {
+    let artistItems = Array.from(artistMap.values()).map((artist) =>
+        <ArtistItem
             key={artist.id}
             id={artist.id}
             artistMap={artistMap}
@@ -13,19 +13,22 @@ const ArtistContainer = ({artistMap, setArtistMap}) => {
         ></ArtistItem>
     )
 
-    function selectAll(event) {    
+    function selectAll(event) {
         setAllArtistChecked(event.target.checked, artistMap, setArtistMap)
     }
 
     return (
-        <div className="artist-container col-12">
-            <table className="table">
+        // todo: apply table sorting
+        <div className="artist-container my-5 ">     
+            <table 
+                className="table table-dark m-0 mx-auto" 
+                style={artistMap.size < 1 ? {display: 'none'} : null}>
                 <thead>
                     <tr>
                         <th scope="col">
-                            <input 
+                            <input
                                 type="checkbox"
-                                className="checkbox-all-artist" 
+                                className="checkbox-all-artist"
                                 onChange={selectAll}
                             ></input>
                         </th>

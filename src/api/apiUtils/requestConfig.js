@@ -1,6 +1,6 @@
 export function requestConfig(method, reqUrl, token) {
     return {
-        method: 'get',
+        method: method,
         url: reqUrl,
         headers: { 
           'Accept': 'application/json', 

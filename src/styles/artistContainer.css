@@ -1,3 +1,15 @@
-.artist-container {
-    /* color: red; */
+.artist-container table {
+    width: auto !important;
+    table-layout: auto !important;
 }
+
+.artist-container table {
+    width: auto !important;
+}
+
+table th {
+    color: white;
+    background-color: var(--color-dark-green);    
+}
+
+

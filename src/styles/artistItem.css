@@ -1,0 +1,22 @@
+tr {
+  color: white;
+  font-weight: 600;
+}
+
+.row-following {
+  background-color: var(--color-green);
+}
+
+.row-not-following {
+  background-color: var(--color-red);
+}
+
+
+.row-checked {
+  background-color: var(--color-grey);
+}
+
+tr:hover {
+  -webkit-filter: grayscale(50%); /* Chrome, Safari, Opera */
+  filter: grayscale(50%);
+}

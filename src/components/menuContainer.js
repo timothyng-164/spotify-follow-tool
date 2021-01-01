@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import FollowButtons from './followButtons'
 import { getArtists } from '../api/getArtists';
 import { setAllArtistChecked } from './util/setAllArtistChecked'
+import { clearAuth } from '../api/auth'
+import { style, loadImage } from './util/commonStyle'
+import '../styles/menuContainer.css'
 
-const MenuContainer = ({artistMap, setArtistMap}) => {
-    async function getArtistClick(event) {
+const MenuContainer = ({artistMap, setArtistMap, setAuthenticated}) => {
+    const [updateLoading, setUpdateLoading] = useState(false)
+
+    async function getArtistClick() {
+        setUpdateLoading(true)
         const fromTracks = document.querySelector('#checkbox-tracks').checked
         const fromAlbums = document.querySelector('#checkbox-albums').checked
         const fromFollowed = document.querySelector('#checkbox-followed').checked
-        document.querySelector('#button-update-artists').textContent = "Refresh Saved Artists"
-        let artistMapResp = await getArtists(fromTracks, fromAlbums, fromFollowed)
-        // todo: add loading symbol on refresh
+        let artistMapResp = new Map()
+        try {
+            artistMapResp = await getArtists(fromTracks, fromAlbums, fromFollowed)
+        } catch (error) {
+            if (error.response.status == 401) {
+                clearAuth(setAuthenticated)
+                setUpdateLoading(false)
+                return
+            }
+        }
         setAllArtistChecked(false, artistMapResp, setArtistMap)
-        // setArtistMap(artistMapResp)
+        setUpdateLoading(false)
     }
+    
 
+    // todo: show number of selected artists
     return (
-        <div>
-            <div className="row col-12">
+        <div className="menu-container">
+            <div className="row col-12 my-3">
                 <div className="mx-auto">
-                    <button id="button-update-artists" onClick={getArtistClick}>Get Artists</button>
+                    <button id="button-update-artists" onClick={getArtistClick} className={`btn-success ${style.button}`} disabled={updateLoading}>
+                        Get Artists
+                        { updateLoading && loadImage }
+                    </button>
                 </div>
             </div>
-            <div className="row col-12">
+            <div className="row col-12 my-3">
                 <div className="mx-auto d-flex">
                     <div className="artist-option">
                         <input type="checkbox" id="checkbox-tracks" defaultChecked={true} className="mx-1"></input>
@@ -38,7 +56,8 @@ const MenuContainer = ({artistMap, setArtistMap}) => {
                     </div>
                 </div>
             </div>
-            <FollowButtons artistMap={artistMap} setArtistMap={setArtistMap}></FollowButtons>
+            { artistMap.size > 0 &&
+            <FollowButtons artistMap={artistMap} setArtistMap={setArtistMap} setAuthenticated={setAuthenticated}></FollowButtons>}
         </div>
     )
 };

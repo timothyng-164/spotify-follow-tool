@@ -1,22 +1,27 @@
 import React from "react";
+import '../styles/artistItem.css'
 
 const ArtistItem = ({id, artistMap, setArtistMap}) => {
-    function handleCheckChange(event) {
+    function handleCheckChange() {
         let artistMapTemp = new Map(artistMap)
         let artist = artistMap.get(id)
-        artist = Object.assign(artist, {'checked': event.target.checked})
+        artist = Object.assign(artist, {'checked': !artistMap.get(id).checked})
         artistMapTemp.set(id, artist)
         setArtistMap(artistMapTemp)
     }
     
+    function rowColor() {
+        if (artistMap.get(id).checked) return "row-checked"
+        return artistMap.get(id).following ? "row-following" : "row-not-following"
+    }
+
     return (
-        // todo: color row (follow green, not red)
-        <tr>
+        <tr className={rowColor()} onClick={handleCheckChange}>
             <td>
                 <input 
                     type="checkbox"
-                    className="checkbox-artist" 
-                    onChange={handleCheckChange}
+                    className="checkbox checkbox-artist" 
+                    // onChange={handleCheckChange}
                     checked={artistMap.get(id).checked}
                 ></input>
             </td>

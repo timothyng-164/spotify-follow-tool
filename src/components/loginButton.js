@@ -1,13 +1,14 @@
 import React from "react";
+import { authRedirect} from '../api/auth'
+import { style } from './util/commonStyle'
 
-const LoginButton = ({artistMap}) => {
-    function handleClick() {
-        console.log(artistMap)
-        const allSelected = Array.from(artistMap.values()).every(x => x.checked)
-        console.log('allSelected', allSelected)
+const LoginButton = ({setAuthenticated}) => {
+    function handleClick(event) {
+        authRedirect(event)
+        setAuthenticated(true)
     }
     return (
-        <button onClick={handleClick}>Log Artist Map</button>
+        <button onClick={handleClick} className={`btn-success ${style.button}`}>Login</button>
     )
 };
 
