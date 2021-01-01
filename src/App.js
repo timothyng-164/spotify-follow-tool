@@ -1,9 +1,8 @@
 import React, {useState, useEffect}  from "react";
 import MainPage from './components/mainPage'
 import './App.css';
+import { checkAuth } from './api/auth'
 import { TOKEN_KEY } from './api/apiUtils/authUtils'
-import { BrowserRouter, Route } from "react-router-dom";
-import CallbackRedirect from './components/callbackRedirect'
 
 
 const App = () => {
@@ -11,6 +10,8 @@ const App = () => {
   const [authenticated, setAuthenticated] = useState(localStorage.getItem(TOKEN_KEY) != null)
 
   useEffect(() => {
+    // console.log('checking')
+    checkAuth(setAuthenticated)
     setAuthenticated(localStorage.getItem(TOKEN_KEY) != null)
   })
 
@@ -22,15 +23,10 @@ const App = () => {
         authenticated={authenticated}
         setAuthenticated={setAuthenticated}
       ></MainPage>
-      <BrowserRouter>
-        <Route path='/callback'>
-          <CallbackRedirect setAuthenticated={setAuthenticated}></CallbackRedirect>
-        </Route>
-      </BrowserRouter> 
       {/* todo: put footer at bottom */}
       <footer className='m-4'>
         <a href="https://github.com/timothyng-164/spotify-follow-tool" >
-          <img src='/images/GitHub-Mark-Light-64px.png' length='30' width='30'></img>
+          <img src={'./images/GitHub-Mark-Light-64px.png'} length='30' width='30'></img>
         </a>
       </footer>
     </div>

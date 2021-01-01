@@ -29,7 +29,7 @@ const FollowButtons = ({artistMap, setArtistMap, setAuthenticated}) => {
         try {
             await deleteFollows(checkedArtists)
         } catch (error) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
                 clearAuth(setAuthenticated)
                 setDeleteLoading(false)
             }
@@ -44,7 +44,7 @@ const FollowButtons = ({artistMap, setArtistMap, setAuthenticated}) => {
         try {
             await putFollows(checkedArtists)
         } catch (error) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
                 clearAuth(setAuthenticated)
                 setPutLoading(false)                
             }

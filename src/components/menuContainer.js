@@ -18,7 +18,7 @@ const MenuContainer = ({artistMap, setArtistMap, setAuthenticated}) => {
         try {
             artistMapResp = await getArtists(fromTracks, fromAlbums, fromFollowed)
         } catch (error) {
-            if (error.response.status == 401) {
+            if (error.response.status === 401) {
                 clearAuth(setAuthenticated)
                 setUpdateLoading(false)
                 return

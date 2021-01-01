@@ -19,26 +19,26 @@ async function followRequestWithIdList(method, artistIdList) {
 
 // ---------------------------------------------
 async function deleteFollows(artistIdList) {
-    console.log('delete follow request')
+    // console.log('delete follow request')
     try {
         for (let artistIds of chunkArray(artistIdList, pageLimit)) {
-            console.log('unfollowing artists', artistIdList)
+            // console.log('unfollowing artists', artistIdList)
             await followRequestWithIdList('delete', artistIds)
         }
     } catch (error) {
-        if (error.response.status == 401) throw error
+        if (error.response.status === 401) throw error
     }
 }
 
 async function putFollows(artistIdList) {
-    console.log('put follow request')
+    // console.log('put follow request')
     try {
         for (let artistIds of chunkArray(artistIdList, pageLimit)) {
-            console.log('following artists', artistIdList)
+            // console.log('following artists', artistIdList)
             await followRequestWithIdList('put', artistIds)
         }
     } catch (error) {
-        if (error.response.status == 401) throw error
+        if (error.response.status === 401) throw error
     }
 }
 
@@ -48,15 +48,15 @@ async function getFollows() {
         let reqUrl = 'https://api.spotify.com/v1/me/following?type=artist&limit=50'
         while(reqUrl) {
             let response = await followRequest('get', reqUrl)
-            console.log('Retreived followed artists', response)
+            // console.log('Retreived followed artists', response)
             for (let item of response.data.artists.items) {
                 followIds.push(item.id)
             }
             reqUrl = response.data.artists.next
         }
-        console.log('all followed ids', followIds)
+        // console.log('all followed ids', followIds)
     } catch (error) {
-        if (error.response.status == 401) throw error
+        if (error.response.status === 401) throw error
     }
     return followIds
 }

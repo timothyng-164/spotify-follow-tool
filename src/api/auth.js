@@ -5,23 +5,21 @@ import {
 
 function checkAuth(setAuthenticated) {
     const params = getHashParams();
-
     const access_token = params.access_token
     const state = params.state
     const storedState = localStorage.getItem(STATE_KEY)
-
     if (access_token) {
         localStorage.setItem(TOKEN_KEY, access_token)
         setAuthenticated(true)
-        console.log('Set access token')
+        // console.log('Set access token')
     }
     
     if (access_token && (state == null || state !== storedState)) {
-        console.log('Attempting to access without state')
+        // console.log('Attempting to access without state')
         setAuthenticated(false)
     } 
     else {
-        console.log('Removing state key')
+        // console.log('Removing state key')
         localStorage.removeItem(STATE_KEY);
     }
 }

@@ -5,8 +5,8 @@
 
 const TOKEN_KEY = 'access_token'
 const STATE_KEY = 'spotify_auth_state';
-const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID; 
-const REDIRECT_URL = process.env.SPOTIFY_REDIRECT_URL; 
+const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID; 
+const REDIRECT_URL = process.env.REACT_APP_SPOTIFY_REDIRECT_URL; 
 const SCOPE = 'user-follow-modify user-library-read user-follow-read';
 
 
@@ -15,7 +15,6 @@ const getHashParams = () => {
     var e, r = /([^&;=]+)=?([^&;]*)/g,
         q = window.location.hash.substring(1);
     while (e = r.exec(q)) {
-        console.log('e', e)
         hashParams[e[1]] = decodeURIComponent(e[2]);
     }
     return hashParams;

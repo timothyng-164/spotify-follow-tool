@@ -72,7 +72,7 @@ async function getArtistMap(startUrl, parseResponseFunction, getNextFunction) {
     } catch (error) {
         // todo: handle 429 for large libraries
         // todo: on unknown exceptions, throw error and display page
-        if (error.response.status == 401) throw error
+        if (error.response.status === 401) throw error
     }
     return artistMap;
 }
@@ -81,14 +81,18 @@ async function getArtists(track, album, followed) {
     let artistMap = new Map()
     if (track) {
         let trackArtists = await getArtistMap('https://api.spotify.com/v1/me/tracks?offset=0&limit=50', parseArtistsFromTracks, getNext)
+        // let trackArtists = await getArtistMap('https://api.spotify.com/v1/me/tracks?offset=4868&limit=50', parseArtistsFromTracks, getNext)
+        // todo: update offset and limit
         artistMap = new Map([...artistMap, ...trackArtists])
     }
     if (album) {
         let albumArtists = await getArtistMap('https://api.spotify.com/v1/me/albums?offset=0&limit=50', parseArtistsFromAlbums, getNext)
+        // let albumArtists = await getArtistMap('https://api.spotify.com/v1/me/albums?offset=773&limit=50', parseArtistsFromAlbums, getNext)
         artistMap = new Map([...artistMap, ...albumArtists])
     }
     if (followed) {
         let followedArtists = await getArtistMap('https://api.spotify.com/v1/me/following?type=artist&limit=50', parseArtistsFromFollowed, getNextFromFollowed)
+        // let followedArtists = await getArtistMap('https://api.spotify.com/v1/me/following?type=artist&limit=50&after=7w07HHCXBP3D7XJtK3BHi3', parseArtistsFromFollowed, getNextFromFollowed)
         artistMap = new Map([...artistMap, ...followedArtists])
     }
     
